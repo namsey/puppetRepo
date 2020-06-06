@@ -1,0 +1,18 @@
+    # Proxy Settings
+    ProxyRequests Off
+    ProxyPreserveHost On
+
+<%  if scope.lookupvar('proxyTomcatUrl') != '' -%>
+    <Location /<%= scope.lookupvar('proxyTomcatUrl') %>>
+<%  else -%>
+    <Location /<%= scope.lookupvar('proxyUrl') %>>
+<%  end -%>
+        AddDefaultCharset Off
+        Order deny,allow
+        Allow from all
+        ProxyPass ajp://<%= scope.lookupvar('ajpHost') %>:<%= scope.lookupvar('ajpPort') %>/<%= scope.lookupvar('proxyUrl') %>
+        ProxyPassReverse ajp://<%= scope.lookupvar('ajpHost') %>:<%= scope.lookupvar('ajpPort') %>/<%= scope.lookupvar('proxyUrl') %>
+<%        if scope.lookupvar('rewrite_to_https') -%>
+        Header edit Location ^http://(.*)$ https://$1
+<%        end -%>
+    </Location>

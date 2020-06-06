@@ -1,0 +1,26 @@
+    # Proxy Settings
+    ProxyRequests Off
+    ProxyPreserveHost On
+
+    <Proxy balancer://<%= scope.lookupvar('name') -%>>
+<%          max_port = scope.lookupvar('thinPort').to_i + scope.lookupvar('thinNumServers').to_i - 1 -%>
+<%          for i in scope.lookupvar('thinPort').to_i..max_port -%>
+                BalancerMember http://127.0.0.1:<%= i %>
+<%          end -%>
+    </Proxy>
+
+<%  if scope.lookupvar('proxyThinUrl') != '' -%>
+    <Location /<%= scope.lookupvar('proxyThinUrl') %>>
+<%  else -%>
+    <Location /<%= scope.lookupvar('proxyUrl') %>>
+<%  end -%>
+        AddDefaultCharset Off
+        Order deny,allow
+        Allow from all
+        ProxyPass balancer://<%= scope.lookupvar('name') %>/<%= scope.lookupvar('proxyUrl') %>
+        ProxyPassReverse balancer://<%= scope.lookupvar('name') %>/
+<%        if scope.lookupvar('rewrite_to_https') -%>
+        Header edit Location ^http://(.*)$ https://$1
+<%        end -%>
+
+    </Location>

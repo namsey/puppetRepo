@@ -1,0 +1,44 @@
+20141111 - v4.0.0
+  Remove prepending 'Header' from header template
+20141107 - v3.8.0
+  Add ability to set AllowOverride on docroot
+20141010 - v3.7.0
+  Add ability to supply ErrorDocuments
+20141002 - v3.6.0
+  Allow altering modsec restricted_extensiosn
+20140918 - v3.5.0
+  Remove global auth params from proxies
+20140605 - v3.4.0
+  Add logrotate to logstash json output files
+20140603 - v3.3.0
+  Update JSON log output format for logstash version 1
+20140219 - v3.2.2
+  HTTP -> HTTPS redirects are now 301
+20140214 - v3.2.1
+  Fix for using both tomcatProxy and thinProxy
+20140210 - v3.2.0
+  Add proxyThinUrl and proxyTomcatUrl parameter (backwards compatible)
+  Move ProxyPass template to individual erb
+20140205 - v3.1.0
+  Allow setting apache version
+  Allow disabling mod_evasive
+  Allow setting mod_evasive version
+20140122 - v3.0.0
+  Mod_security now uses packaged rules
+  Mod_security choose rule files per host
+  Add support for text/x-component
+v2.3.0:
+  Add ability to set custom Headers directives
+  Update sensu checks
+v2.2.1:
+  Add containment to module
+v2.2.0:
+  Add custom logstash fields
+v2.1.0:
+  Ensure apache version is latest
+  Remove logrotate dependency
+  Remove hiera dependency
+  Add mod_deflate config
+  Add mod_expires to vhost
+v2.0.0:
+  Initial public release

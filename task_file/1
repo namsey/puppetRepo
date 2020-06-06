@@ -1,0 +1,42 @@
+
+node 'agent1.puppet.com'{
+
+service{'httpd':
+        enable => 'true',
+        ensure => 'running',
+         }
+	
+file{'/var/www/html/index.html':
+	 content => $::ipaddress,
+	}
+
+file{'/etc/motd':
+	ensure => 'present',
+	content => 'TESTING on agent1.puppet.com again',
+	}
+}
+
+
+node 'agent2.puppet.com'{
+
+service{'httpd':
+        enable => 'true',
+        ensure => 'running',
+         }
+
+file{'/var/www/html/index.html':
+         content =>$::ipaddress,
+        }
+
+file{'/etc/motd':
+        ensure => 'present',
+        content => 'TESTING on agent2.puppet.com again',
+        }
+}
+node default{
+
+package{'httpd':
+        ensure => 'installed',
+        }
+}
+

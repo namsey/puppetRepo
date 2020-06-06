@@ -1,0 +1,36 @@
+    # Site definition
+    DocumentRoot "<%= scope.lookupvar('docroot') %>"
+    <Directory "<%= scope.lookupvar('docroot') %>">
+<%      if scope.lookupvar('options').is_a? Array -%>
+<%          options_real = '' -%>
+<%          scope.lookupvar('options').each do |option| -%>
+<%              options_real = "#{options_real} #{option}" -%>
+<%          end -%>
+        Options <%= options_real %>
+<%      elsif scope.lookupvar('options') != '' -%>
+        Options <%= scope.lookupvar('options') %>
+<%      end -%>
+<%      if scope.lookupvar('addHandler') != '' -%>
+        AddHandler <%= scope.lookupvar('addHandler') %>
+<%      end -%>
+<%      if scope.lookupvar('directoryIndex') != '' -%>
+        DirectoryIndex <%= scope.lookupvar('directoryIndex') %>
+<%      end -%>
+        AllowOverride <%= scope.lookupvar('docrootOverride') %>
+        Order deny,allow
+<%      if ( scope.lookupvar('auth') ) == true -%>
+        Deny from all
+<%      else -%>
+        Allow from all
+<%      end -%>
+<%      if scope.lookupvar('authParams').is_a? Array -%>
+<%          scope.lookupvar('authParams').each do |param| -%>
+        <%= param %>
+<%          end -%>
+<%      end -%>
+<%      if scope.lookupvar('errorDocs') -%>
+<%        @errorDocs.each do |doc| -%>
+        ErrorDocument <%= doc['code'] %> <%= doc['location'] %>
+<%        end -%>
+<%      end -%>
+    </Directory>
